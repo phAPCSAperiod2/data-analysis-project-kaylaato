@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 /**
@@ -16,13 +17,16 @@ import java.util.Scanner;
  */
 public class App {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
 
-        // TODO: Update this with your CSV file path
-        File file = new File("StateData2020-CDC-Census.csv");
+        // ====== configuration ======
+        // path is relative to the working directory when the program runs;
+        // in this project we keep the CSV in the top‑level data/ directory
+        File file = new File("/workspaces/data-analysis-project-kaylaato/data/StateData2020-CDC-Census.csv");
 
-        // TODO: Create an array of Data objects to store data
-        Data[] dataList = new Data[100];
+        // create an array large enough for all states. we will remember how
+        // many rows were actually read so we can ignore the unused slots.
+        Data[] dataList = new Data[60];  // a bit of buffer for safety
 
         // TODO: Read file using Scanner
         // - Skip header if needed
@@ -36,26 +40,42 @@ public class App {
         if (scanner.hasNextLine()) {
             scanner.nextLine(); // skip header
         }
-        while(scanner.hasNextLine()){
+        while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
-            String[] columns = line.split(","); // separate by comma
-            // Assuming columns are: State, Population, DrugOverdoseDeaths, OverdoseDeathRate
+            String[] columns = line.split(","); // split on comma
+
+            if (columns.length < 7) {
+                // skip malformed line but log it for debugging
+                System.err.println("skipping malformed line: " + line);
+                continue;
+            }
+
+            // columns (after header) should be:
+            // 0 state, 1 population, 5 overdose‑rate, 6 overdose‑deaths
             String state = columns[0];
             String population = columns[1];
             String overdoseDeathRate = columns[5];
             String drugOverdoseDeaths = columns[6];
+
             dataList[index] = new Data(state, population, drugOverdoseDeaths, overdoseDeathRate);
             index++;
         }
-        scanner.close(); // close scanner
-        
+        scanner.close();
 
-        // TODO: Call your analysis methods
-        // Example:
-        // double maxValue = findMaxValue(dataList);
-        // double average = computeAverageValue(dataList);
-        Data maxData = findStateMaxOverdoseDeath(dataList);
-        Data[] statesOver25 = findStatesOver25(dataList);
+        // create a trimmed array containing only the rows we actually loaded
+        Data[] loadedData = java.util.Arrays.copyOf(dataList, index);
+
+        // analysis methods should operate on the trimmed list
+        Data maxData = findStateMaxOverdoseDeath(loadedData);
+        Data[] statesOver25 = findStatesOver25(loadedData);
+
+        // TODO: Print insights
+        System.out.println(maxData.getState() + " has the highest overdose death total among the states in the dataset: "
+                + maxData.getDrugOverdoseDeaths() + " deaths.");
+        System.out.println("The following states have an overdose death rate greater than 25 per 100,000 people: ");
+        for (Data state : statesOver25) {
+            System.out.println("- " + state.getState());
+        }
 
 
         // TODO: Print insights
