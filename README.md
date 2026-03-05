@@ -124,11 +124,12 @@ In `Main.java`, you must:
 
 ### Column → Attribute Map
 
-| Attribute Name | CSV Column Name | Column Index # | Notes |
-|----------------|------------------|----------------|-------|
-|                |                  |                |       |
-|                |                  |                |       |
-|                |                  |                |       |
+| Attribute Name      | CSV Column Name                   | Column Index # |Notes                       |
+|---------------------|-----------------------------------|----------------|----------------------------|
+|state                |STATE                              |0               |Name of state or territory  |
+|population           |Population in 2016 from census.gov |1               |Used for scaling analysis   |
+|overdoseDeathRate    |Drug Overdose death rates...       |5               |Rate per 100,000 population |
+|drugOverdoseDeaths   |Drug overdose deaths total         |6               |Absolute count of deaths    |
 
 ---
 
@@ -138,15 +139,15 @@ You must write **at least two algorithms** to analyze your dataset.
 
 ### Required: Choose 2 or more algorithms
 - [ ] Minimum value of attribute  
-- [ ] Maximum value of attribute  
+- [X] Maximum value of attribute  
 - [ ] Average of attribute  
 - [ ] Filter by category  
-- [ ] Count items matching a condition  
+- [X] Count items matching a condition  
 
 **Algorithms I will implement:**
 
-1. __________________________________________  
-2. __________________________________________  
+1. findStateMaxOverdoseDeath  
+2. findStatesOver25  
 
 Optional extras:  
 - Sorting  
@@ -165,13 +166,12 @@ After analyzing your objects, print:
 - ✔ A clear answer to your guiding question  
 
 **My findings:**  
-____________________________________________________________________  
-____________________________________________________________________  
-____________________________________________________________________  
+Maximum Deaths: Florida recorded the highest total with 4,728 drug overdose deaths.
+
+High-Rate States: 13 regions (including West Virginia, Ohio, and Pennsylvania) have death rates significantly higher than the national average (over 25 per 100k).
 
 **My answer to the guiding question:**  
-____________________________________________________________________  
-____________________________________________________________________  
+The state with the highest total drug overdose deaths is Florida. The states with a rate over 25 per 100,0000 are Connecticut, Delaware, D.C., Kentucky, Maine, Maryland, Massachusetts, New Hampshire, New Mexico, Ohio, Pennsylvania, Rhode Island, and West Virginia.
 
 ---
 
@@ -218,10 +218,7 @@ Write a short reflection (3–5 sentences):
 - How trustworthy are your insights?
 
 **My reflection:**  
-____________________________________________________________________  
-____________________________________________________________________  
-____________________________________________________________________  
-____________________________________________________________________  
+During the analysis, I discovered that Puerto Rico has a value of -1 for its death totals and rates, indicating missing or suppressed data. This could lead to incorrect averages if not handled properly. Furthermore, the dataset uses 2016 data; using this to make policy decisions in 2024 could be biased as the opioid crisis has shifted geographically. Finally, total death counts are heavily biased by population size, which is why the "Rate per 100,000" is a more ethical and accurate metric for comparing the severity of the crisis between states like California and Rhode Island.
 
 ---
 

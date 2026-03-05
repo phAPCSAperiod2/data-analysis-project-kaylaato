@@ -4,16 +4,6 @@ import java.util.Scanner;
 
 /**
  * Main application for the Data Analysis Mini‑Project.
- *
- * TODO:
- *  - Update the path to your dataset file
- *  - Read the CSV file using Scanner
- *  - Parse each row and extract the correct columns
- *  - Construct Data objects from each row
- *  - Store them in an array
- *  - Write methods to analyze the dataset (min, max, average, filters, etc.)
- *  - Print insights and answer your guiding question
- *  - Add Javadoc comments for any methods you create
  */
 public class App {
 
@@ -28,13 +18,6 @@ public class App {
         // many rows were actually read so we can ignore the unused slots.
         Data[] dataList = new Data[60];  // a bit of buffer for safety
 
-        // TODO: Read file using Scanner
-        // - Skip header if needed
-        // - Loop through rows
-        // - Split each line by commas
-        // - Convert text to numbers when needed
-        // - Create new Data objects
-        // - Add to your array
         Scanner scanner = new Scanner(file); // create scanner to read file
         int index = 0;
         if (scanner.hasNextLine()) {
@@ -69,19 +52,7 @@ public class App {
         Data maxData = findStateMaxOverdoseDeath(loadedData);
         Data[] statesOver25 = findStatesOver25(loadedData);
 
-        // TODO: Print insights
-        System.out.println(maxData.getState() + " has the highest overdose death total among the states in the dataset: "
-                + maxData.getDrugOverdoseDeaths() + " deaths.");
-        System.out.println("The following states have an overdose death rate greater than 25 per 100,000 people: ");
-        for (Data state : statesOver25) {
-            System.out.println("- " + state.getState());
-        }
-
-
-        // TODO: Print insights
-        // - Number of rows loaded
-        // - Min, max, average, or any other findings
-        // - Final answer to your guiding question
+        // print insights
         System.out.println(maxData.getState() + " has the highest overdose death total among the states in the dataset:" + maxData.getDrugOverdoseDeaths() + " deaths.");
         System.out.println("The following states have an overdose death rate greater than 25 per 100,000 people:");
         for (Data state : statesOver25) {
@@ -89,6 +60,11 @@ public class App {
         }
     }
 
+    /**
+     * Searches through the provided array to find the state with the highest total number of drug overdose deaths.
+     *  @param dataList An array of Data objects representing the dataset.
+     *  @return The Data object with the highest drugOverdoseDeaths value.
+     */
     public static Data findStateMaxOverdoseDeath(Data[] dataList) {
         Data maxData = dataList[0];
         for (int i = 1; i < dataList.length; i++) {
@@ -99,6 +75,10 @@ public class App {
         return maxData;
     }
 
+    /** Filters the dataset to identify states where the drug overdose death rate * is higher than 25 per 100,000 people. 
+     *  @param dataList An array of Data objects representing the dataset
+     *  @return A new, trimmed array containing only the Data objects that meet the criteria (overdoseDeathRate > 25)
+     */
     public static Data[] findStatesOver25(Data[] dataList) {
         // Count how many states have rate > 25
         int count = 0;

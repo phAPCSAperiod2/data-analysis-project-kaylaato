@@ -74,6 +74,9 @@ public class Data {
 
     
     // TODO: Override toString() to return a readable representation of your object
+    /**
+     * Prints out object to be readable
+     */
     @Override
     public String toString() {
         return "Data{" +
