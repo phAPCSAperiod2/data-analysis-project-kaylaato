@@ -104,7 +104,7 @@ You must create a class that represents **one row** of your dataset.
 - Any additional analysis/helper methods as needed  
 
 ### ✏ Include your class diagram
-
+/workspaces/data-analysis-project-kaylaato/src/Screenshot 2026-03-05 3.29.54 PM.png
 
 ---
 
